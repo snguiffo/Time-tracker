@@ -11,19 +11,21 @@ export class UsersService {
         return await this.usersRepository.find();
     }
 
-    async getUser(_id: number): Promise<User[]> {
-        return await this.usersRepository.find({
-            select: ["firstname", "lastname", "isActive"],
+    async getUser(_id: number): Promise<User> {
+        return await this.usersRepository.findOne({
+            //select: ["firstname", "lastname", "isActive"],
             where: [{ "id": _id }]
         });
     }
 
-    async createUser(user: User){
-        this.usersRepository.create(user)
+    async createUser(userData: Partial<User>) :  Promise<User> {
+        const user = this.usersRepository.create(userData);
+      return this.usersRepository.save(user);
     }
 
-    async updateUser(user: User) {
-        this.usersRepository.save(user)
+    async updateUser(id: number, userInfo: Partial<User>) {
+        await this.usersRepository.update(id, userInfo);
+    return this.getUser(id);
     }
 
     async deleteUser(user: User) {

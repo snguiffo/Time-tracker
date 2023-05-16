@@ -11,6 +11,9 @@ export class Timer {
     description:string;
 
     @Column()
+    creationDate:string;
+
+    @Column()
     startTime:string;
 
     @Column()

@@ -1,9 +1,21 @@
-import { User } from "src/users/user.entity/user.entity";
+import { IsNotEmpty, IsNumber, IsString, Min } from 'class-validator';
 
+export class CreateProjectDto {
+  @IsNotEmpty()
+  @IsString()
+  name: string;
 
-export class CreateProjectDTO {
-    name: string;
-    description: string;
+  @IsNotEmpty()
+  @IsString()
+  description: string;
 
-    consultant:User;
-  }
+  @IsNotEmpty()
+  @IsNumber()
+  @Min(0)
+  estimatedTime: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @Min(0)
+  hourlyRate: number;
+}
