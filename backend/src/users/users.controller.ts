@@ -1,29 +1,43 @@
-import { Controller, Post, Body, Get, Put, Delete, Param } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.entity/user.entity';
 
 @Controller('users')
 export class UsersController {
-    constructor(private service:UsersService){}
-    
+    constructor(private readonly usersService: UsersService) {}
+
+    @Get()
+    async getUsers(): Promise<User[]> {
+        return this.usersService.getUsers();
+    }
+
     @Get(':id')
-    get(@Param() params) {
-        return this.service.getUser(params.id);
+    async getUser(@Param('id') id: number): Promise<User> {
+        return this.usersService.getUser(id);
     }
 
     @Post()
-    create(@Body() user: User) {
-        console.log(user);
-        return this.service.createUser(user);
+    async createUser(@Body() userData: Partial<User>): Promise<User> {
+        return this.usersService.createUser(userData);
     }
 
-    @Put()
-    update(@Body() user: User) {
-        return this.service.updateUser(user);
+    @Put(':id')
+    async updateUser(@Param('id') id: number, @Body() userInfo: Partial<User>): Promise<User | undefined> {
+        return this.usersService.updateUser(id, userInfo);
     }
 
     @Delete(':id')
-    deleteUser(@Param() params) {
-        return this.service.deleteUser(params.id);
+    async deleteUser(@Param('id') id: number): Promise<void> {
+        return this.usersService.deleteUser(id);
+    }
+
+    @Put(':id/activate')
+    async activateUser(@Param('id') id: number): Promise<User> {
+        return this.usersService.activateUser(id);
+    }
+
+    @Put(':id/set-role')
+    async setUserRole(@Param('id') id: number, @Body() roleId: number): Promise<User> {
+        return this.usersService.setUserRole(id, roleId);
     }
 }

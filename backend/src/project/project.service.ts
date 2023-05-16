@@ -1,18 +1,20 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Project } from './project.entity/project.entity';
-import { User } from 'src/users/user.entity/user.entity';
 import { Timer } from './timer.entity/timer.entity';
 import { LogProjectInfoDto } from './dto/logProject.dto';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class ProjectService {
   constructor(
+    @Inject(UsersService)
+    private readonly userService: UsersService,
     @InjectRepository(Project)
     private readonly projectRepository: Repository<Project>, 
-    private readonly userRepository: Repository<User>,
-    private readonly timerRepository: Repository<Timer>
+    @InjectRepository(Timer)
+    private readonly timerRepository: Repository<Timer>,
   ) {}
 
   async createProject(projectData: Partial<Project>): Promise<Project> {
@@ -47,9 +49,7 @@ export class ProjectService {
       throw new Error('Project non trouvé');
     }
 
-    const user = await this.userRepository.findOne({ where:{
-        id: consultantId
-    } });
+    const user = await this.userService.getUser(consultantId);
     if (!user) {
       throw new Error('Consultant non trouvé');
     }
@@ -63,7 +63,7 @@ export class ProjectService {
       throw new Error('Project non trouvé');
     }
 
-    const user = await this.userRepository.findOne({where:{id:reviewerId}});
+    const user = await this.userService.getUser(reviewerId);
     if (!user) {
       throw new Error('Reviewer non trouvé');
     }
@@ -75,7 +75,7 @@ export class ProjectService {
   async logProjectInfo(projectId: number, logProjectInfoDto: LogProjectInfoDto): Promise<Timer> {
     const project = await this.getProjectById(projectId);
     if (!project) {
-      throw new Error('Project not found');
+      throw new Error('Project non trouvé');
     }
 
     const timer = new Timer();

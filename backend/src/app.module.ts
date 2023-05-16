@@ -15,7 +15,7 @@ import { ProjectModule } from './project/project.module';
       database: 'project_db',
       autoLoadEntities: true,
       synchronize: true,
-    }), UsersModule, ProjectModule],
+    }), /*UsersModule,*/ ProjectModule],
   controllers: [AppController],
   providers: [AppService],
 })
