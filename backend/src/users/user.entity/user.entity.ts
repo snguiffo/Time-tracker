@@ -20,7 +20,7 @@ export class User {
     @IsEmail()
     email:string;
 
-    @Column() 
+    @Column({default:false}) 
     isActive:boolean;
     
     @Column() 
