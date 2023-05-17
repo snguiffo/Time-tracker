@@ -6,15 +6,16 @@ import { UsersModule } from './users/users.module';
 import { ProjectModule } from './project/project.module';
 import { loadFixtures } from './demo/loadData';
 import { DataSource } from 'typeorm';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [TypeOrmModule.forRoot({//TODO replace all with process.env.DATABASE_HOST, process.env.DATABASE_PORT, ...
+  imports: [ConfigModule.forRoot(), TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3308,
-      username: 'root',
-      password: '',
-      database: 'project_db',
+      host: process.env.DATABASE_HOST,
+      port: parseInt(process.env.DATABASE_PORT, 10),
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD||"",
+      database: process.env.DATABASE_NAME,
       autoLoadEntities: true,
       synchronize: true,
     }), /*UsersModule,*/ ProjectModule],
@@ -30,7 +31,7 @@ export class AppModule {
   async loadFixtures(): Promise<void> {
     try {
       //await loadFixtures('roles', this.dbConnection);
-      await loadFixtures('users', this.dbConnection);
+      //await loadFixtures('users', this.dbConnection);
       console.log('Fixtures loaded successfully.');
     } catch (error) {
       console.error('Error loading fixtures:', error);
