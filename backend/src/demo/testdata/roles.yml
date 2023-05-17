@@ -1,0 +1,9 @@
+fixtures:
+    - Role:
+        id: 1
+        name: consultant
+        description: "utilisateur basique"
+    - Role:
+        id: 2
+        name: administrateur
+        description: "admin user"

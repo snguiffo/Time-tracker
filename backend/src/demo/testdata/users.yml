@@ -1,0 +1,28 @@
+fixtures:
+    - User:
+        email: "user1@example.com"
+        firstname: "Consultant 1"
+        lastname: "prénom"
+        password: "aaaaaaaaaa"
+        profile_img: ""
+        tel: ""
+        roleId: 1
+        isActive: true
+    - User:
+        email: "user2@example.com"
+        firstname: "Consultant 2"
+        lastname: "prénom"
+        password: "aaaaaaaaaa"
+        profile_img: ""
+        tel: ""
+        roleId: 1
+        isActive: true
+    - User:
+        email: "user3@example.com"
+        firstname: "Consultant 3"
+        lastname: "prénom"
+        password: "aaaaaaaaaa"
+        profile_img: ""
+        tel: ""
+        roleId: 1
+        isActive: true
