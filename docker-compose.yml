@@ -1,0 +1,10 @@
+version: '3'
+services:
+  # Create backend container
+  backend:
+    # Create backend container  
+    build: ./backend
+    ports:
+      - "8080:8080"
+    container_name: backend-docker
+    restart: always
