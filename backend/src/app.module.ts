@@ -7,6 +7,10 @@ import { ProjectModule } from './project/project.module';
 import { loadFixtures } from './demo/loadData';
 import { DataSource } from 'typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
+import { AuthService } from './auth/auth.service';
+import { JwtStrategy } from './auth/JwtStrategy';
 
 @Module({
   imports: [ConfigModule.forRoot(), TypeOrmModule.forRoot({
@@ -18,9 +22,17 @@ import { ConfigModule } from '@nestjs/config';
       database: process.env.DATABASE_NAME,
       autoLoadEntities: true,
       synchronize: true,
-    }), /*UsersModule,*/ ProjectModule],
+    }), 
+    UsersModule, 
+    ProjectModule, 
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    JwtModule.register({
+      secret: 'secretK',
+      signOptions: { expiresIn: '6h' },
+    }),
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AuthService, JwtStrategy],
 })
 export class AppModule {
   constructor(private readonly dbConnection: DataSource) {

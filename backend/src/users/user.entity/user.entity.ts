@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, Unique, OneToOne, ManyToOne } f
 import {IsEmail} from 'class-validator';
 import { Project } from 'src/project/project.entity/project.entity';
 import { Role } from 'src/users/role.entity/role.entity';
+import * as bcrypt from 'bcrypt';
 
 @Entity()
 @Unique(['email'])
@@ -40,5 +41,9 @@ export class User {
     
     @ManyToOne(()=>Role, (role)=>role.users)
     role: Role
+
+    async comparePassword(password: string): Promise<boolean> {
+        return bcrypt.compare(password, this.password);
+      }
 
 }
