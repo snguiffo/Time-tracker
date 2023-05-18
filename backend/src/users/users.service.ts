@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity/user.entity';
 import { Role } from './role.entity/role.entity';
 import { CreateUserDto } from './dto/createUser.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -26,7 +27,7 @@ export class UsersService {
                 user.email = userData.email;
                 user.firstname = userData.firstname;
                 user.lastname = userData.lastname?userData.lastname:"";
-                user.password = userData.password;
+                user.password = await bcrypt.hash(userData.password, 10);
                 user.profile_img = userData.profile_img?userData.profile_img:"";
                 user.tel = userData.tel?userData.tel:"";
                 user.role = { id: 1 } as Role; //TODO Use Constant for role id's
