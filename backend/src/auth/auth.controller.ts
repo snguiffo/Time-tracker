@@ -9,7 +9,6 @@ export class AuthController {
   @Post('login')
   async login(@Body() loginDto: LoginDto) {
     const { email, password } = loginDto;
-
     // Validate user credentials
     const user = await this.authService.validateUser(email, password);
     if (!user) {
@@ -18,6 +17,6 @@ export class AuthController {
 
     // Generate and return the access token
     const accessToken = await this.authService.signIn(user);
-    return accessToken;
+    return {accessToken};
   }
 }

@@ -11,6 +11,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth/auth.service';
 import { JwtStrategy } from './auth/JwtStrategy';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [ConfigModule.forRoot(), TypeOrmModule.forRoot({
@@ -27,9 +28,10 @@ import { JwtStrategy } from './auth/JwtStrategy';
     ProjectModule, 
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      secret: 'secretK',
+      secret: process.env.JWT_KEY,
       signOptions: { expiresIn: '6h' },
     }),
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, JwtStrategy],

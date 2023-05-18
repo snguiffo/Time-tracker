@@ -29,8 +29,8 @@ export class AuthService {
 
   async signIn(user: User){
     const payload = { email: user.email, sub: user.id };
-    const accessToken = this.jwtService.signAsync(payload);
-    return {accessToken};
+    const accessToken = this.jwtService.signAsync(payload, {secret:process.env.JWT_KEY});
+    return accessToken;
   }
 
 }

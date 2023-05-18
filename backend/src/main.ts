@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { JwtAuthGuard } from './auth/JwtAuthGuard';
+//import { JwtAuthGuard } from './auth/JwtAuthGuard';
 import { User } from './users/user.entity/user.entity';
 import { getDataSourceToken, getRepositoryToken } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
@@ -18,7 +18,7 @@ async function bootstrap() {
     })
   );
 
-  app.useGlobalGuards(new JwtAuthGuard());
+  //app.useGlobalGuards(new JwtAuthGuard()); # Just guard selected routes
   await app.listen(3000);
 
   let user = app.get(getRepositoryToken(User));
