@@ -1,28 +1,30 @@
 version: '3'
+
 services:
-  # Create frontend container
-  frontend: # Name of our service
-    build: ./frontend # path to dockerfile
-    ports: # Port binding to host from docker container
-      - "3000:3000" # Bind port 3000 of host to 3000 of container
-    container_name: frontend-docker
-    restart: always # What to do if container crashes
-    links:
-      - backend
-  # Create backend container
   backend:
-    # Create backend container  
     build: ./backend
     ports:
-      - "8080:8080"
-    container_name: backend-docker
+      - '3000:3000'
+    depends_on:
+      - database
+
+  database:
+    image: mysql:latest
     restart: always
-    links:
-      - db
-  # Create database container
-  db:
-    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: project_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: admin
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  frontend:
+    build: ./frontend
     ports:
-    - "3306:3306"
-    container_name: database-docker
-    restart: always
+      - '80:80'
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:
