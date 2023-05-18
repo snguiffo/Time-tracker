@@ -3,6 +3,9 @@ version: '3'
 services:
   backend:
     build: ./backend
+    env_file:
+      - ./.env
+
     ports:
       - '3000:3000'
     depends_on:
@@ -11,11 +14,8 @@ services:
   database:
     image: mysql:latest
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: admin
-      MYSQL_DATABASE: project_db
-      MYSQL_USER: root
-      MYSQL_PASSWORD: admin
+    env_file:
+      - ./.env
     volumes:
       - mysql_data:/var/lib/mysql
 
