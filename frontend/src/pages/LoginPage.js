@@ -96,7 +96,7 @@ export default function LoginPage() {
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 OR
               </Typography>
-            </Divider>*/}
+            </Divider> */}
 
             <LoginForm />
           </StyledContent>
