@@ -22,27 +22,44 @@ async function bootstrap() {
   await app.listen(3000);
 
   let user = app.get(getRepositoryToken(User));
-  await addDefaultAdmin(user);
+  let role = app.get(getRepositoryToken(Role));
+  await addDefaultAdmin(user, role);
 }
 bootstrap();
 
-async function addDefaultAdmin(user) {
-  user.find({where: { role: {id: 2} }}).then(async (superAdmin) => {//TODO define global Role & add default admin params to .env
-    if (superAdmin.length === 0) {
-      try {
-        const newUser = new User()
-          newUser.email = "admin@admin.com";
-          newUser.firstname = "admin";
-          newUser.lastname = "";
-          newUser.profile_img = "";
-          newUser.tel = "";
-          newUser.password = await bcrypt.hash("admin", 10);
-          newUser.role = { id: 2 } as Role;
+async function addDefaultAdmin(user, role) {
+  try {
+    const existingRole = await role.findOne({ where: { id: 2 } });
+    if (!existingRole) {
+      const adminRole = new Role();
+      adminRole.name = "administrator";
+      await role.save(adminRole);
+      console.log("Administrator role created.");
+    }else{
+      console.log("Administrator role exits.");
+    }
+
+    const superAdmin = await user.findOne({ where: { role: { id: 2 } } });
+    if (!superAdmin) {
+      const newUser = new User();
+      newUser.email = "admin@admin.com";
+      newUser.firstname = "admin";
+      newUser.lastname = "";
+      newUser.profile_img = "";
+      newUser.tel = "";
+      newUser.password = await bcrypt.hash("admin", 10);
+
+      // Retrieve the role from the database
+      const adminRole = await role.findOne({ where: { id: 2 } });
+      if (adminRole) {
+        newUser.role = adminRole;
         await user.save(newUser);
-        console.log("default admin added.");
-      } catch (error: any) {
-        console.log(error);
+        console.log("Default admin added.");
+      } else {
+        console.log("Admin role not found.");
       }
     }
-  });
+  } catch (error) {
+    console.log(error);
+  }
 }
