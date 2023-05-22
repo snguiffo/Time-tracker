@@ -14,5 +14,11 @@
 To download the project files on your computer, open the `CLI` in the folder in which you run the project files and type the following commands:
 ```
 cli> git clone https://github.com/USERNAME/Repo_name.git
-cli> docker-compose up
+cli> docker-compose build
+cli> docker-compose up -d
 ```
+### Admin default
+- username: admin@admin.com
+- password: admin
+
+
