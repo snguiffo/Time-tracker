@@ -39,13 +39,13 @@ import { AuthModule } from './auth/auth.module';
 export class AppModule {
   constructor(private readonly dbConnection: DataSource) {
     //chargement des données demo
-    this.loadFixtures();
+    //this.loadFixtures();
   }
   
   async loadFixtures(): Promise<void> {
     try {
-      //await loadFixtures('roles', this.dbConnection);
-      //await loadFixtures('users', this.dbConnection);
+      await loadFixtures('roles', this.dbConnection);
+      await loadFixtures('users', this.dbConnection);
       console.log('Fixtures loaded successfully.');
     } catch (error) {
       console.error('Error loading fixtures:', error);

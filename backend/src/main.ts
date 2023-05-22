@@ -31,6 +31,10 @@ async function addDefaultAdmin(user, role) {
   try {
     const existingRole = await role.findOne({ where: { id: 2 } });
     if (!existingRole) {
+      const consultantRole = new Role();
+      consultantRole.name = "consultant";
+      await role.save(consultantRole);
+      
       const adminRole = new Role();
       adminRole.name = "administrator";
       await role.save(adminRole);
@@ -39,7 +43,7 @@ async function addDefaultAdmin(user, role) {
       console.log("Administrator role exits.");
     }
 
-    const superAdmin = await user.findOne({ where: { role: { id: 2 } } });
+     const superAdmin = await user.findOne({ where: { role: { id: 2 } } });
     if (!superAdmin) {
       const newUser = new User();
       newUser.email = "admin@admin.com";
@@ -58,7 +62,7 @@ async function addDefaultAdmin(user, role) {
       } else {
         console.log("Admin role not found.");
       }
-    }
+    } 
   } catch (error) {
     console.log(error);
   }

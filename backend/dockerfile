@@ -4,9 +4,8 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install 
 RUN npm rebuild bcrypt --build-from-source
-#RUN npm run build
 COPY . .
 EXPOSE 3000
 
 # Démarrage de l'application NestJS
-CMD [ "npm", "run", "start:prod" ]
+CMD [ "npm", "run", "start:dev" ]

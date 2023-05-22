@@ -14,7 +14,7 @@ export class User {
     @Column({ length: 25 })
     firstname:string;
     
-    @Column({ length: 25 })
+    @Column({ length: 25, default:"" })
     lastname:string;
 
     @Column()
@@ -24,10 +24,10 @@ export class User {
     @Column({default:false}) 
     isActive:boolean;
     
-    @Column() 
+    @Column({default:""}) 
     profile_img:string;
     
-    @Column() 
+    @Column({default:""}) 
     tel:string;
     
     @Column() 
