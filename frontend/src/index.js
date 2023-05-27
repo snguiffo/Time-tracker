@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom/client';
 
 //
+import { RecoilRoot } from 'recoil';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import reportWebVitals from './reportWebVitals';
@@ -9,7 +10,9 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-root.render(<App />);
+root.render(<RecoilRoot>
+    <App />
+    </RecoilRoot>);
 
 // If you want to enable client cache, register instead.
 serviceWorker.unregister();

@@ -1,4 +1,4 @@
-import { Navigate, useRoutes } from 'react-router-dom';
+import { Navigate, useRoutes, Route } from 'react-router-dom';
 // layouts
 import DashboardLayout from './layouts/dashboard';
 import SimpleLayout from './layouts/simple';
@@ -9,8 +9,24 @@ import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
 import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
+import { useRecoilValue } from 'recoil';
+import { authAtom } from './states/authAtom';
+import { userAtom } from './states/userAtom';
+
 
 // ----------------------------------------------------------------------
+
+const AuthRoute = ({ component: Component, ...rest }) => {
+  const isAuthenticated = useRecoilValue(authAtom);
+
+  return (
+        isAuthenticated ? (
+          <Component/>
+        ) : (
+          <Navigate to="/login" />
+        )
+  );
+};
 
 export default function Router() {
   const routes = useRoutes([
@@ -19,10 +35,10 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
-        { path: 'app', element: <DashboardAppPage /> },
-        { path: 'user', element: <UserPage /> },
-        { path: 'products', element: <ProductsPage /> },
-        { path: 'blog', element: <BlogPage /> },
+        { path: 'app', element: <AuthRoute component={DashboardAppPage} /> },
+        { path: 'user', element: <AuthRoute component={UserPage} /> },
+        { path: 'projects', element: <AuthRoute component={ProductsPage} /> },
+        
       ],
     },
     {

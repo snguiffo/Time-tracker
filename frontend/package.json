@@ -12,8 +12,8 @@
     "lint": "eslint --ext .js,.jsx ./src",
     "lint:fix": "eslint --fix --ext .js,.jsx ./src",
     "clear-all": "rm -rf build node_modules",
-    "re-start": "rm -rf build node_modules && yarn install && yarn start",
-    "re-build": "rm -rf build node_modules && yarn install && yarn build"
+    "re-start": "rm -rf build node_modules && npm install && npm start",
+    "re-build": "rm -rf build node_modules && npm install && npm build"
   },
   "eslintConfig": {
     "extends": [
@@ -58,13 +58,14 @@
     "react-hook-form": "^7.43.1",
     "react-router-dom": "^6.8.1",
     "react-scripts": "^5.0.1",
+    "recoil": "^0.7.7",
     "simplebar-react": "^3.2.1",
     "web-vitals": "^3.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",
     "@babel/eslint-parser": "^7.19.1",
-    "eslint": "^8.34.0",
+    "eslint": "^8.41.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.6.0",
     "eslint-config-react-app": "^7.0.1",

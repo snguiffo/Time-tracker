@@ -5,15 +5,17 @@
     "es2021": true
   },
   "extends": [
-    "airbnb",
+    /*"airbnb",*/
     "plugin:jsx-a11y/recommended",
     "plugin:react-hooks/recommended",
-    "prettier"
+    "prettier",
+    "plugin:import/recommended"
   ],
   "plugins": [
+    "eslint-plugin-import",
     "react",
     "react-hooks",
-    "prettier"
+    "prettier",
   ],
   "parser": "@babel/eslint-parser",
   "parserOptions": {
@@ -63,6 +65,8 @@
     "react/no-unstable-nested-components": 0,
     "react/function-component-definition": 0,
     "react/jsx-no-constructed-context-values": 0,
+    "import/no-unresolved": 0,
+    "import/order":0,
     "no-unused-vars": [
       1,
       {

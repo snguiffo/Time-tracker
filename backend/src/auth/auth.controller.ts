@@ -17,6 +17,6 @@ export class AuthController {
 
     // Generate and return the access token
     const accessToken = await this.authService.signIn(user);
-    return {accessToken};
+    return {user, accessToken};
   }
 }
